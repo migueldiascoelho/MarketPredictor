@@ -27,7 +27,7 @@ namespace MarketPredictor
         }
 
         public string ObterSimboloAcao()
-        {           
+        {
             return "AAPL";  // Exemplo de simbolo de ação da "Apple"
         }
 
@@ -35,6 +35,11 @@ namespace MarketPredictor
         {
             this.previsoes = previsoes;
             // Atualizar a interface com as novas previsões
+        }
+
+        public void ExibirErro(string mensagem)
+        {
+            MessageBox.Show(mensagem, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void BotaoPrever_Click(object sender, EventArgs e)

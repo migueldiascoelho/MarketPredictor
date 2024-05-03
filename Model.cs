@@ -1,6 +1,8 @@
-﻿namespace MarketPredictor
+﻿using System;
+
+namespace MarketPredictor
 {
-    class Model
+    public class Model
     {
         public delegate void PrevisaoAtualizadaEventHandler(List<Previsao> previsoes);
         public event PrevisaoAtualizadaEventHandler PrevisaoAtualizada;
@@ -14,13 +16,27 @@
 
         public void BuscaDadosHistoricos(string simboloAcao)
         {
-            // Busca de dados ao API da Yahoo Finance
-            var dadosHistoricos = new DadosHistoricos(simboloAcao);
-            EfetuarPrevisao(ref dadosHistoricos);
+            try
+            {
+                // Simular a busca de dados ao API da Yahoo Finance
+                var dadosHistoricos = new DadosHistoricos(simboloAcao);
+                if (dadosHistoricos.PrecosHistoricos.Count == 0)
+                {
+                    throw new Exception("Nenhum dado histórico encontrado para a ação: " + simboloAcao);
+                }
+                EfetuarPrevisao(ref dadosHistoricos);
+            }
+            catch (Exception ex)
+            {
+                // Relançar exceção para ser tratada pelo Controller
+                throw ex;
+            }
         }
 
+        // Utiliza Infer.Net para aplicar modelos de previsão
         public void EfetuarPrevisao(ref DadosHistoricos dadosHistoricos)
         {
+            // Lógica de previsão usando dados históricos
             AtualizarPrevisoes(new Previsao());  // Simula a adição de uma nova previsão
         }
 

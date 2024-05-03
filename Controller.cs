@@ -23,7 +23,7 @@ namespace MarketPredictor
 
         private void Model_PrevisaoAtualizada(List<Previsao> previsoes)
         {
-            AtualizarPrevisoes(ref previsoes);
+            AtualizarPrevisoes(previsoes);
         }
 
         public void IniciarPrograma()
@@ -33,13 +33,20 @@ namespace MarketPredictor
 
         public void UtilizadorClicouPrever()
         {
-            string simboloAcao = view.ObterSimboloAcao(); // Selecionou uma acao
-            model.BuscaDadosHistoricos(simboloAcao);  // Vai buscar os dados historicos para previsao
+            try
+            {
+                string simboloAcao = view.ObterSimboloAcao(); // Selecionou uma acao
+                model.BuscaDadosHistoricos(simboloAcao);  // Vai buscar os dados históricos para previsão
+            }
+            catch (Exception ex)
+            {
+                view.ExibirErro(ex.Message); // Mostrar mensagem de erro na interface
+            }
         }
 
-        public void AtualizarPrevisoes(ref List<Previsao> previsoes)
+        public void AtualizarPrevisoes(List<Previsao> previsoes)
         {
-            view.AtualizarPrevisoes(previsoes); // Atualiza o interface com a previsão
+            view.AtualizarPrevisoes(previsoes); // Atualiza a interface com a previsão
         }
     }
 }
