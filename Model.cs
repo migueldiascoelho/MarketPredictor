@@ -19,7 +19,6 @@
             EfetuarPrevisao(ref dadosHistoricos);
         }
 
-        // Utiliza o Infer.Net para fazer a previsão
         public void EfetuarPrevisao(ref DadosHistoricos dadosHistoricos)
         {
             AtualizarPrevisoes(new Previsao());  // Simula a adição de uma nova previsão
