@@ -1,3 +1,4 @@
+using MarketPredictor;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -21,7 +22,21 @@ namespace MarketPredictor
 
         public void InicializarComponentes()
         {
-            // Inicializa os componentes da interface
+            // Adicionar mais símbolos de ações ao comboBoxAcoes
+            comboBoxAcoes.Items.AddRange(new object[] {
+                "AAPL", // Apple
+                "MSFT", // Microsoft
+                "GOOGL", // Alphabet (Google)
+                "AMZN", // Amazon
+                "META", // Facebook
+                "TSLA" // Tesla
+            });
+
+            // Selecionar o primeiro item por padrão
+            if (comboBoxAcoes.Items.Count > 0)
+            {
+                comboBoxAcoes.SelectedIndex = 0;
+            }
         }
 
         public void AtivarInterface()
@@ -39,7 +54,15 @@ namespace MarketPredictor
         public void AtualizarPrevisoes(List<Previsao> previsoes)
         {
             // Atualiza a interface com as previsões
-            labelResultado.Text = "Ainda não temos estes dados, mas estamos a trabalhar nisso...";
+            if (previsoes != null && previsoes.Count > 0)
+            {
+                var previsao = previsoes[previsoes.Count - 1];
+                labelResultado.Text = $"Preço Atual da Ação: {previsao.PrecoPrevisto}";
+            }
+            else
+            {
+                labelResultado.Text = "Ainda não temos estes dados, mas estamos a trabalhar nisso...";
+            }
         }
 
         public void ExibirErro(string mensagem)
@@ -53,15 +76,15 @@ namespace MarketPredictor
             controller?.UtilizadorClicouPrever();
         }
     }
-
-    public interface IView
-    {
-        void InicializarComponentes();
-        void AtivarInterface();
-        string ObterSimboloAcao();
-        void AtualizarPrevisoes(List<Previsao> previsoes);
-        void ExibirErro(string mensagem);
-        void SetController(Controller controller);
-    }
-
 }
+
+public interface IView
+{
+    void InicializarComponentes();
+    void AtivarInterface();
+    string ObterSimboloAcao();
+    void AtualizarPrevisoes(List<Previsao> previsoes);
+    void ExibirErro(string mensagem);
+    void SetController(Controller controller);
+}
+

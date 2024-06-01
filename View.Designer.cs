@@ -5,13 +5,13 @@
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.Label labelSelecionarAcao;
         private System.Windows.Forms.ComboBox comboBoxAcoes;
-        private System.Windows.Forms.Button BotaoPrever;
+        private System.Windows.Forms.Button buttonPrever;
         private System.Windows.Forms.Label labelResultado;
 
         /// <summary>
-        /// Clean up any resources being used.
+        /// Limpa quaisquer recursos que estão a ser usados.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing">true se os recursos geridos devem ser descartados; caso contrário, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,14 +22,14 @@
         }
 
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// Método necessário para o suporte ao Designer - não modifique
+        /// os conteúdos deste método com o editor de código.
         /// </summary>
         private void InitializeComponent()
         {
             this.labelSelecionarAcao = new System.Windows.Forms.Label();
             this.comboBoxAcoes = new System.Windows.Forms.ComboBox();
-            this.BotaoPrever = new System.Windows.Forms.Button();
+            this.buttonPrever = new System.Windows.Forms.Button();
             this.labelResultado = new System.Windows.Forms.Label();
             this.SuspendLayout();
 
@@ -54,15 +54,15 @@
             this.comboBoxAcoes.TabIndex = 1;
 
             // 
-            // botãoPrever
+            // buttonPrever
             // 
-            this.BotaoPrever.Location = new System.Drawing.Point(20, 90);
-            this.BotaoPrever.Name = "BotaoPrever";
-            this.BotaoPrever.Size = new System.Drawing.Size(75, 23);
-            this.BotaoPrever.TabIndex = 2;
-            this.BotaoPrever.Text = "Prever";
-            this.BotaoPrever.UseVisualStyleBackColor = true;
-            this.BotaoPrever.Click += new System.EventHandler(this.BotaoPrever_Click);
+            this.buttonPrever.Location = new System.Drawing.Point(20, 90);
+            this.buttonPrever.Name = "buttonPrever";
+            this.buttonPrever.Size = new System.Drawing.Size(75, 23);
+            this.buttonPrever.TabIndex = 2;
+            this.buttonPrever.Text = "Prever";
+            this.buttonPrever.UseVisualStyleBackColor = true;
+            this.buttonPrever.Click += new System.EventHandler(this.BotaoPrever_Click);
 
             // 
             // labelResultado
@@ -82,7 +82,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.labelSelecionarAcao);
             this.Controls.Add(this.comboBoxAcoes);
-            this.Controls.Add(this.BotaoPrever);
+            this.Controls.Add(this.buttonPrever);
             this.Controls.Add(this.labelResultado);
             this.Name = "View";
             this.Text = "Market Predictor";

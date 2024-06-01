@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using YahooFinanceApi;
 
 namespace MarketPredictor
 {
@@ -15,20 +17,32 @@ namespace MarketPredictor
             previsoes = new List<Previsao>();
         }
 
-        public void BuscaDadosHistoricos(string simboloAcao)
+        public async void BuscaDadosHistoricos(string simboloAcao)
         {
             try
             {
-                // Simular a busca de dados ao API da Yahoo Finance
-                var dadosHistoricos = new DadosHistoricos(simboloAcao);
-                if (dadosHistoricos.PrecosHistoricos.Count == 0)
+                // Busca o preço atual da ação no Yahoo Finance API
+                var dadosHistoricos = await YahooFinanceApi.Yahoo.Symbols(simboloAcao).Fields(Field.RegularMarketPrice).QueryAsync();
+                var dado = dadosHistoricos[simboloAcao];
+                double precoAtual = dado[Field.RegularMarketPrice];
+
+                var previsao = new Previsao
                 {
-                    throw new Exception("Nenhum dado histórico encontrado para a ação: " + simboloAcao);
-                }
-                EfetuarPrevisao(ref dadosHistoricos);
+                    DataPrevisao = DateTime.Now,
+                    PrecoPrevisto = precoAtual,
+                    IntervaloConfianca = 0 // Apenas como exemplo
+                };
+
+                // Log dos dados obtidos para testagem
+                Console.WriteLine($"Preço atual da ação {simboloAcao}: {precoAtual}");
+
+                AtualizarPrevisoes(previsao);
             }
             catch (Exception ex)
             {
+                // Log de erro
+                Console.WriteLine($"Erro ao buscar dados históricos para a ação {simboloAcao}: {ex.Message}");
+
                 // Relançar exceção para ser tratada pelo Controller
                 throw ex;
             }
@@ -37,8 +51,7 @@ namespace MarketPredictor
         // Utiliza Infer.Net para aplicar modelos de previsão
         public void EfetuarPrevisao(ref DadosHistoricos dadosHistoricos)
         {
-            // Lógica de previsão usando dados históricos
-            AtualizarPrevisoes(new Previsao());  // Simula a adição de uma nova previsão
+
         }
 
         private void AtualizarPrevisoes(Previsao novaPrevisao)
