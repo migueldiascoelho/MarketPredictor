@@ -1,3 +1,5 @@
+using System;
+
 namespace MarketPredictor
 {
     class MarketPredictor
@@ -8,7 +10,11 @@ namespace MarketPredictor
         [STAThread]
         static void Main()
         {
-            Controller controller = new Controller();
+            IModel model = new Model();
+            Controller controller = null;
+            IView view = new View(controller);
+            controller = new Controller(model, view);
+            ((View)view).SetController(controller);
             controller.IniciarPrograma();
         }
     }

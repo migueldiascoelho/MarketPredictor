@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace MarketPredictor
 {
     // Esta classe vai ter a estrutura dos dados históricos

@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketPredictor
 {
     public class Controller
     {
-        private Model model;
-        private View view;
+        private IModel model;
+        private IView view;
 
-        public Controller()
+        public Controller(IModel model, IView view)
         {
-            model = new Model();
-            model.PrevisaoAtualizada += Model_PrevisaoAtualizada;
+            this.model = model;
+            this.model.PrevisaoAtualizada += Model_PrevisaoAtualizada;
 
-            view = new View(this);
-            view.InicializarComponentes();
+            this.view = view;
+            this.view.InicializarComponentes();
         }
 
         private void Model_PrevisaoAtualizada(List<Previsao> previsoes)
@@ -50,4 +46,3 @@ namespace MarketPredictor
         }
     }
 }
-

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MarketPredictor
 {
-    public class Model
+    public class Model : IModel
     {
         public delegate void PrevisaoAtualizadaEventHandler(List<Previsao> previsoes);
         public event PrevisaoAtualizadaEventHandler PrevisaoAtualizada;
@@ -45,5 +46,11 @@ namespace MarketPredictor
             previsoes.Add(novaPrevisao);
             PrevisaoAtualizada?.Invoke(previsoes);
         }
+    }
+
+    public interface IModel
+    {
+        event Model.PrevisaoAtualizadaEventHandler PrevisaoAtualizada;
+        void BuscaDadosHistoricos(string simboloAcao);
     }
 }

@@ -4,41 +4,46 @@ using System.Windows.Forms;
 
 namespace MarketPredictor
 {
-    public partial class View : Form
+    public partial class View : Form, IView
     {
         private Controller controller;
-        private List<Previsao> previsoes;
 
-        public View(Controller controlador)
+        public View(Controller controller)
         {
-            this.controller = controlador;
+            this.controller = controller;
             InitializeComponent();
+        }
+
+        public void SetController(Controller controller)
+        {
+            this.controller = controller;
         }
 
         public void InicializarComponentes()
         {
-            // Configuração inicial dos componentes da UI, como botões, campos de texto, etc.
+            // Inicializa os componentes da interface
         }
 
         public void AtivarInterface()
         {
-            // Mostra a interface principal ao usuário
+            // Ativa a interface
             Show();
         }
 
         public string ObterSimboloAcao()
         {
-            return "AAPL";  // Exemplo de simbolo de ação da "Apple"
+            // Obtém o símbolo da ação selecionada
+            return "AAPL"; // Exemplo fixo, deve ser implementado conforme necessário
         }
 
         public void AtualizarPrevisoes(List<Previsao> previsoes)
         {
-            this.previsoes = previsoes;
-            // Atualizar a interface com as novas previsões
+            // Atualiza a interface com as previsões
         }
 
         public void ExibirErro(string mensagem)
         {
+            // Exibe a mensagem de erro na interface
             MessageBox.Show(mensagem, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
@@ -46,5 +51,14 @@ namespace MarketPredictor
         {
             controller.UtilizadorClicouPrever();
         }
+    }
+
+    public interface IView
+    {
+        void InicializarComponentes();
+        void AtivarInterface();
+        string ObterSimboloAcao();
+        void AtualizarPrevisoes(List<Previsao> previsoes);
+        void ExibirErro(string mensagem);
     }
 }
