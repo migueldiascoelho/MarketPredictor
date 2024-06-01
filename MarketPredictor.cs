@@ -11,11 +11,12 @@ namespace MarketPredictor
         static void Main()
         {
             IModel model = new Model();
-            Controller controller = null;
+            Controller controller = null; 
             IView view = new View(controller);
             controller = new Controller(model, view);
-            ((View)view).SetController(controller);
+            view.SetController(controller);
             controller.IniciarPrograma();
+            Application.Run((Form)view);
         }
     }
 }

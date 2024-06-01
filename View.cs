@@ -33,12 +33,13 @@ namespace MarketPredictor
         public string ObterSimboloAcao()
         {
             // Obtém o símbolo da ação selecionada
-            return "AAPL"; // Exemplo fixo, deve ser implementado conforme necessário
+            return comboBoxAcoes.SelectedItem?.ToString();
         }
 
         public void AtualizarPrevisoes(List<Previsao> previsoes)
         {
             // Atualiza a interface com as previsões
+            labelResultado.Text = "Ainda não temos estes dados, mas estamos a trabalhar nisso...";
         }
 
         public void ExibirErro(string mensagem)
@@ -49,7 +50,7 @@ namespace MarketPredictor
 
         private void BotaoPrever_Click(object sender, EventArgs e)
         {
-            controller.UtilizadorClicouPrever();
+            controller?.UtilizadorClicouPrever();
         }
     }
 
@@ -60,5 +61,7 @@ namespace MarketPredictor
         string ObterSimboloAcao();
         void AtualizarPrevisoes(List<Previsao> previsoes);
         void ExibirErro(string mensagem);
+        void SetController(Controller controller);
     }
+
 }
