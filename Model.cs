@@ -3,10 +3,12 @@
 using System.Collections.Generic; // Importa o namespace System.Collections.Generic para usar List<T>
 using Microsoft.ML.Probabilistic.Distributions; // Importa o namespace Microsoft.ML.Probabilistic.Distributions para usar distribuições probabilísticas do Infer.NET
 using Microsoft.ML.Probabilistic.Models; // Importa o namespace Microsoft.ML.Probabilistic.Models para usar modelos probabilísticos do Infer.NET
+using System.Threading.Tasks;
+using YahooFinanceApi;
 
 namespace MarketPredictor 
 {
-    public class Model
+    public class Model : IModel
     {
         // Declaração de um delegate para manipular eventos de atualização de previsões
         public delegate void PrevisaoAtualizadaEventHandler(List<Previsao> previsoes);
@@ -25,10 +27,16 @@ namespace MarketPredictor
         }
 
         // Método para buscar dados históricos da ação
-        public void BuscaDadosHistoricos(string simboloAcao)
+        public async void BuscaDadosHistoricos(string simboloAcao)
         {
             try
             {
+                // Busca o preço atual da ação no Yahoo Finance API
+                var dadosHistoricos = await YahooFinanceApi.Yahoo.Symbols(simboloAcao).Fields(Field.RegularMarketPrice).QueryAsync();
+                var dado = dadosHistoricos[simboloAcao];
+                double precoAtual = dado[Field.RegularMarketPrice];
+
+                var previsao = new Previsao
 
                 // Aqui pretende-se fazer a lógica real para buscar os dados históricos da ação usando APIs financeira YAHOO
                 var dadosHistoricos = new double[] { }; // Por enquanto, é apenas um array vazio como exemplo
@@ -41,10 +49,23 @@ namespace MarketPredictor
 
                 // Chama o método para efetuar a previsão com os dados históricos
                 EfetuarPrevisao(dadosHistoricos);
+                    DataPrevisao = DateTime.Now,
+                    PrecoPrevisto = precoAtual,
+                    IntervaloConfianca = 0 // Apenas como exemplo
+                };
+
+                // Log dos dados obtidos para testagem
+                Console.WriteLine($"Preço atual da ação {simboloAcao}: {precoAtual}");
+
+                AtualizarPrevisoes(previsao);
             }
             catch (Exception ex)
             {
                 // Relança a exceção para ser tratada pelo Controller
+                // Log de erro
+                Console.WriteLine($"Erro ao buscar dados históricos para a ação {simboloAcao}: {ex.Message}");
+
+                // Relançar exceção para ser tratada pelo Controller
                 throw ex;
             }
         }
@@ -84,5 +105,11 @@ namespace MarketPredictor
             // Aciona o evento de previsão atualizada, passando a lista de previsões como argumento
             PrevisaoAtualizada?.Invoke(previsoes);
         }
+    }
+
+    public interface IModel
+    {
+        event Model.PrevisaoAtualizadaEventHandler PrevisaoAtualizada;
+        void BuscaDadosHistoricos(string simboloAcao);
     }
 }
