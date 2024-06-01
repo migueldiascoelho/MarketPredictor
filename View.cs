@@ -13,6 +13,10 @@ namespace MarketPredictor
         {
             this.controller = controlador;
             InitializeComponent();
+            InicializarComponentes();
+
+            // Adiciona o manipulador de eventos para o fechamento do formulário
+            this.FormClosing += new FormClosingEventHandler(View_FormClosing);
         }
 
         public void InicializarComponentes()
