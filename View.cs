@@ -9,17 +9,21 @@ namespace MarketPredictor
     {
         private Controller controller;
         private List<Previsao> previsoes;
-        private TextBox textBoxSymbol;      
-        private Button buttonPredict;       // botão para previsão
+        private TextBox textBoxSymbol;
+        private Button buttonPredict;
         private ListBox listBoxPrevisoes;
 
+        public View()
+        {
+            InitializeComponent();  // Inicialização básica
+        }
         public View(Controller controller)
         {
             this.controller = controller;
             InitializeComponent();
             InicializarComponentes();
 
-            // Adiciona o manipulador de eventos para o fecho do formulario
+            // Adiciona o manipulador de eventos para o fecho do formulário
             this.FormClosing += new FormClosingEventHandler(View_FormClosing);
         }
 
@@ -29,22 +33,36 @@ namespace MarketPredictor
         }
 
         public void InicializarComponentes()
-        { // Configuração inicial dos componentes da UI, como botões, campos de texto, etc.
+        {
+            // Configuração inicial dos componentes da UI, como botões, campos de texto, etc.
             this.textBoxSymbol = new TextBox();
             this.textBoxSymbol.Location = new System.Drawing.Point(20, 20);
             this.Controls.Add(this.textBoxSymbol);
 
             this.buttonPredict = new Button();
             this.buttonPredict.Text = "Prever";
-            this.buttonPredict.Location = new System.Drawing.Point(20, 60);
+            this.buttonPredict.Location = new System.Drawing.Point(70, 60);
             this.buttonPredict.Click += new EventHandler(this.BotaoPrever_Click);
             this.Controls.Add(this.buttonPredict);
 
             this.listBoxPrevisoes = new ListBox();
             this.listBoxPrevisoes.Location = new System.Drawing.Point(20, 100);
             this.Controls.Add(this.listBoxPrevisoes);
-        }
-        {
+
+            if (this.comboBoxAcoes == null)
+            {
+                this.comboBoxAcoes = new ComboBox();
+                this.comboBoxAcoes.Location = new System.Drawing.Point(150, 20);
+                this.Controls.Add(this.comboBoxAcoes);
+            }
+
+            if (this.labelResultado == null)
+            {
+                this.labelResultado = new Label();
+                this.labelResultado.Location = new System.Drawing.Point(20, 200);
+                this.Controls.Add(this.labelResultado);
+            }
+
             // Adicionar mais símbolos de ações ao comboBoxAcoes
             comboBoxAcoes.Items.AddRange(new object[] {
                 "AAPL", // Apple
@@ -70,8 +88,7 @@ namespace MarketPredictor
 
         public string ObterSimboloAcao()
         {
-            return textBoxSymbol.Text;  // retorna o simbolo de acção exemplo "APPL"
-            // Obtém o símbolo da ação selecionada
+            // Retorna o símbolo de ação selecionado no comboBoxAcoes
             return comboBoxAcoes.SelectedItem?.ToString();
         }
 
@@ -84,11 +101,12 @@ namespace MarketPredictor
             {
                 listBoxPrevisoes.Items.Add(previsao.ToString());
             }
-            // Atualiza a interface com as previsões
+
+            // Atualiza a interface com a previsão mais recente
             if (previsoes != null && previsoes.Count > 0)
             {
                 var previsao = previsoes[previsoes.Count - 1];
-                labelResultado.Text = $"Preço Atual da Ação: {previsao.PrecoPrevisto}";
+              //  labelResultado.Text = $"Preço Atual da Ação: {previsao.PrecoPrevisto}";
             }
             else
             {
@@ -120,18 +138,14 @@ namespace MarketPredictor
             }
         }
     }
-            controller?.UtilizadorClicouPrever();
-        }
+
+    public interface IView
+    {
+        void InicializarComponentes();
+        void AtivarInterface();
+        string ObterSimboloAcao();
+        void AtualizarPrevisoes(List<Previsao> previsoes);
+        void ExibirErro(string mensagem);
+        void SetController(Controller controller);
     }
 }
-
-public interface IView
-{
-    void InicializarComponentes();
-    void AtivarInterface();
-    string ObterSimboloAcao();
-    void AtualizarPrevisoes(List<Previsao> previsoes);
-    void ExibirErro(string mensagem);
-    void SetController(Controller controller);
-}
-

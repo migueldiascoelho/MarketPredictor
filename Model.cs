@@ -1,14 +1,13 @@
 ﻿using System; // Importa o namespace System para usar tipos e funcionalidades básicas do C#
-
 using System.Collections.Generic; // Importa o namespace System.Collections.Generic para usar List<T>
 using Microsoft.ML.Probabilistic.Distributions; // Importa o namespace Microsoft.ML.Probabilistic.Distributions para usar distribuições probabilísticas do Infer.NET
 using Microsoft.ML.Probabilistic.Models; // Importa o namespace Microsoft.ML.Probabilistic.Models para usar modelos probabilísticos do Infer.NET
-using System.Threading.Tasks;
-using YahooFinanceApi;
+using System.Threading.Tasks; // Importa o namespace System.Threading.Tasks para usar async/await
+using YahooFinanceApi; // Importa o namespace YahooFinanceApi para buscar dados de ações
 
-namespace MarketPredictor 
+namespace MarketPredictor // Declara o namespace MarketPredictor
 {
-    public class Model : IModel
+    public class Model : IModel // Declara a classe Model
     {
         // Declaração de um delegate para manipular eventos de atualização de previsões
         public delegate void PrevisaoAtualizadaEventHandler(List<Previsao> previsoes);
@@ -36,36 +35,43 @@ namespace MarketPredictor
                 var dado = dadosHistoricos[simboloAcao];
                 double precoAtual = dado[Field.RegularMarketPrice];
 
-                var previsao = new Previsao
-
-                // Aqui pretende-se fazer a lógica real para buscar os dados históricos da ação usando APIs financeira YAHOO
-                var dadosHistoricos = new double[] { }; // Por enquanto, é apenas um array vazio como exemplo
+                // Log dos dados obtidos para testagem
+                Console.WriteLine($"Preço atual da ação {simboloAcao}: {precoAtual}");
 
                 // Verifica se foram encontrados dados históricos
-                if (dadosHistoricos.Length == 0)
+                if (dadosHistoricos.Count == 0)
                 {
                     throw new Exception("Nenhum dado histórico encontrado para a ação: " + simboloAcao);
                 }
 
+                // Extrai os valores dos dados históricos
+                double[] historicoValores = new double[dadosHistoricos.Count];
+                int index = 0;
+                foreach (var valor in dadosHistoricos.Values)
+                {
+                    historicoValores[index++] = valor[Field.RegularMarketPrice];
+                }
+
                 // Chama o método para efetuar a previsão com os dados históricos
-                EfetuarPrevisao(dadosHistoricos);
+                EfetuarPrevisao(historicoValores);
+
+                // Cria uma nova previsão (simulada para exemplo)
+                var previsao = new Previsao
+                {
                     DataPrevisao = DateTime.Now,
                     PrecoPrevisto = precoAtual,
                     IntervaloConfianca = 0 // Apenas como exemplo
                 };
 
-                // Log dos dados obtidos para testagem
-                Console.WriteLine($"Preço atual da ação {simboloAcao}: {precoAtual}");
-
+                // Atualiza as previsões com a nova previsão
                 AtualizarPrevisoes(previsao);
             }
             catch (Exception ex)
             {
-                // Relança a exceção para ser tratada pelo Controller
                 // Log de erro
                 Console.WriteLine($"Erro ao buscar dados históricos para a ação {simboloAcao}: {ex.Message}");
 
-                // Relançar exceção para ser tratada pelo Controller
+                // Relança a exceção para ser tratada pelo Controller
                 throw ex;
             }
         }
@@ -107,9 +113,21 @@ namespace MarketPredictor
         }
     }
 
+    // Classe Previsao para armazenar dados de previsões
+    public class Previsao
+    {
+        public DateTime DataPrevisao { get; set; }
+        public double PrecoPrevisto { get; set; }
+        public double IntervaloConfianca { get; set; }
+    }
+
+    // Interface para o Model
     public interface IModel
     {
+        // Declaração do evento de atualização de previsão
         event Model.PrevisaoAtualizadaEventHandler PrevisaoAtualizada;
+
+        // Declaração do método para buscar dados históricos
         void BuscaDadosHistoricos(string simboloAcao);
     }
 }

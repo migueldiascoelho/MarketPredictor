@@ -13,7 +13,7 @@
     <PackageReference Include="Microsoft.ML.Probabilistic.Compiler" Version="0.4.2403.801" />
     <PackageReference Include="Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows" Version="0.3.1912.403" />
     <PackageReference Include="Microsoft.ML.Probabilistic.Visualizers.Windows" Version="0.4.2403.801" />
-
+    <PackageReference Include="Microsoft.Msagl.Drawing" Version="1.1.6" />
     <PackageReference Include="YahooFinanceApi" Version="2.3.3" />
   </ItemGroup>
 
