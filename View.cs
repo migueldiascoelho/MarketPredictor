@@ -13,18 +13,20 @@ namespace MarketPredictor
         private Button buttonPredict;
         private ListBox listBoxPrevisoes;
 
+
         public View()
         {
             InitializeComponent();  // Inicialização básica
+            InicializarComponentes();
+            AdicionarManipuladorEventos();
         }
+
         public View(Controller controller)
         {
             this.controller = controller;
             InitializeComponent();
             InicializarComponentes();
-
-            // Adiciona o manipulador de eventos para o fecho do formulário
-            this.FormClosing += new FormClosingEventHandler(View_FormClosing);
+            AdicionarManipuladorEventos();
         }
 
         public void SetController(Controller controller)
@@ -80,6 +82,11 @@ namespace MarketPredictor
             }
         }
 
+        private void AdicionarManipuladorEventos()
+        {
+            this.FormClosing += new FormClosingEventHandler(View_FormClosing);
+        }
+
         public void AtivarInterface()
         {
             // Ativa a interface
@@ -106,7 +113,7 @@ namespace MarketPredictor
             if (previsoes != null && previsoes.Count > 0)
             {
                 var previsao = previsoes[previsoes.Count - 1];
-              //  labelResultado.Text = $"Preço Atual da Ação: {previsao.PrecoPrevisto}";
+                // labelResultado.Text = $"Preço Atual da Ação: {previsao.PrecoPrevisto}";
             }
             else
             {
