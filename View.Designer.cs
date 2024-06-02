@@ -27,61 +27,65 @@
         /// </summary>
         private void InitializeComponent()
         {
-            labelSelecionarAcao = new Label();
-            comboBoxAcoes = new ComboBox();
-            buttonPrever = new Button();
-            labelResultado = new Label();
-            SuspendLayout();
+            this.labelSelecionarAcao = new System.Windows.Forms.Label();
+            this.comboBoxAcoes = new System.Windows.Forms.ComboBox();
+            this.buttonPrever = new System.Windows.Forms.Button();
+            this.labelResultado = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+
             // 
             // labelSelecionarAcao
             // 
-            labelSelecionarAcao.AutoSize = true;
-            labelSelecionarAcao.Location = new Point(229, 24);
-            labelSelecionarAcao.Name = "labelSelecionarAcao";
-            labelSelecionarAcao.Size = new Size(91, 15);
-            labelSelecionarAcao.TabIndex = 0;
-            labelSelecionarAcao.Text = "Selecionar Ação";
+            this.labelSelecionarAcao.AutoSize = true;
+            this.labelSelecionarAcao.Location = new System.Drawing.Point(20, 20);
+            this.labelSelecionarAcao.Name = "labelSelecionarAcao";
+            this.labelSelecionarAcao.Size = new System.Drawing.Size(95, 15);
+            this.labelSelecionarAcao.TabIndex = 0;
+            this.labelSelecionarAcao.Text = "Selecionar Ação Cotada em Bolsa e clicar em Prever para ter uma previsão do seu valor futuro";
+
             // 
             // comboBoxAcoes
             // 
-            comboBoxAcoes.FormattingEnabled = true;
-            comboBoxAcoes.Items.AddRange(new object[] { "AAPL" });
-            comboBoxAcoes.Location = new Point(170, 42);
-            comboBoxAcoes.Name = "comboBoxAcoes";
-            comboBoxAcoes.Size = new Size(150, 23);
-            comboBoxAcoes.TabIndex = 1;
+            this.comboBoxAcoes.FormattingEnabled = true;
+            this.comboBoxAcoes.Location = new System.Drawing.Point(20, 50);
+            this.comboBoxAcoes.Name = "comboBoxAcoes";
+            this.comboBoxAcoes.Size = new System.Drawing.Size(150, 23);
+            this.comboBoxAcoes.TabIndex = 1;
+
             // 
             // buttonPrever
             // 
-            buttonPrever.Location = new Point(326, 42);
-            buttonPrever.Name = "buttonPrever";
-            buttonPrever.Size = new Size(75, 23);
-            buttonPrever.TabIndex = 2;
-            buttonPrever.Text = "Prever";
-            buttonPrever.UseVisualStyleBackColor = true;
+            this.buttonPrever.Location = new System.Drawing.Point(20, 90);
+            this.buttonPrever.Name = "buttonPrever";
+            this.buttonPrever.Size = new System.Drawing.Size(75, 23);
+            this.buttonPrever.TabIndex = 2;
+            this.buttonPrever.Text = "Prever";
+            this.buttonPrever.UseVisualStyleBackColor = true;
+            this.buttonPrever.Click += new System.EventHandler(this.BotaoPrever_Click);
+
             // 
             // labelResultado
             // 
-            labelResultado.AutoSize = true;
-            labelResultado.Location = new Point(244, 133);
-            labelResultado.Name = "labelResultado";
-            labelResultado.Size = new Size(334, 15);
-            labelResultado.TabIndex = 3;
-            labelResultado.Text = "Ainda não temos estes dados, mas estamos a trabalhar nisso...";
+            this.labelResultado.AutoSize = true;
+            this.labelResultado.Location = new System.Drawing.Point(200, 50);
+            this.labelResultado.Name = "labelResultado";
+            this.labelResultado.Size = new System.Drawing.Size(248, 15);
+            this.labelResultado.TabIndex = 3;
+
             // 
             // View
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(labelSelecionarAcao);
-            Controls.Add(comboBoxAcoes);
-            Controls.Add(buttonPrever);
-            Controls.Add(labelResultado);
-            Name = "View";
-            Text = "Market Predictor";
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelSelecionarAcao);
+            this.Controls.Add(this.comboBoxAcoes);
+            this.Controls.Add(this.buttonPrever);
+            this.Controls.Add(this.labelResultado);
+            this.Name = "View";
+            this.Text = "Market Predictor";
+            this.ResumeLayout(false);
+            this.PerformLayout();
         }
     }
 }
